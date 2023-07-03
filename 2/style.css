@@ -1,0 +1,26 @@
+body{
+    background: rgb(73, 149, 184);
+}
+img {
+    height: 500px;
+    border-radius: 20px;
+}
+p {
+    color: rgb(247, 0, 255);
+    font-size: 30px;
+    border: 5px solid wheat;
+    border-radius: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
+    text-align: center;
+    padding: 50px;
+    margin: 100px;
+}
+span {
+    font-weight: bold;
+}
+
+.wiki_image{
+    height: 100px;
+    width: 100px;
+}
