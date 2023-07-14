@@ -56,7 +56,7 @@ ROOT_URLCONF = "advertisements.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [Path.joinpath(BASE_DIR, "templates")],
+        "DIRS": [Path.joinpath(BASE_DIR, "templates")], # указываем путь к templates 
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -117,8 +117,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+# ссылка для обращения к static файлам
 STATIC_URL = "static/"
-
+# подключаем папку static
+STATICFILES_DIRS = [
+    Path.joinpath(BASE_DIR, "static")
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
