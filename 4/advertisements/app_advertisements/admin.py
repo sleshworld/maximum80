@@ -3,18 +3,18 @@ from .models import Advertisement
 
 # Register your models here.
 class AdvertisementAdmin(admin.ModelAdmin):
-    list_display = ["id", "title", "description", "price", "created_date", "auction"]
+    list_display = ["id", "user", "title", "description", "price", "created_date", "auction", "updated_date", "image"]
     list_filter = ["auction", "created_at"] # добавляем возможность фильтрации
     actions = ["make_auction_as_false", "make_auction_as_true"] # чтобы action работал, для него нужно создать функцию
 
     # добавляет разделение на подразделы при добавлении нового объекта
     fieldsets = (
         ('Общее', {
-            "fields": ("title", "description")
+            "fields": ("title", "description", "user", "image")
         }),
         ("Финансы",{
             "fields" : ("price", "auction"),
-            "collapse": ["collapse"] # чтобы можно было  сворачивать поле
+            "classes": ["collapse"] # чтобы можно было  сворачивать поле
         })
     )
 

@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -24,3 +25,7 @@ urlpatterns = [
     path("", include("app_advertisements.urls")),
     path("", include("app_lesson_4.urls"))
 ]
+
+if settings.DEBUG == True:
+    # добавляем новый паттерн - когда мы заходим по ссылке media - нужно смотреть в файл document_root
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
