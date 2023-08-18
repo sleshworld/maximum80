@@ -47,3 +47,8 @@ class Advertisement(models.Model):
                 "<span style='color:graeen; font-weight: bold;'> Сегодня в {} </span>", updated_time
             )
         return self.updated_at.strftime("%d.%m.%y в %H:%M:%S")
+    
+    @admin.display(description="Картинка")
+    def img_view(self):
+        from django.utils import timezone, html
+        return html.format_html("<img src='{}' style='width:50px; height:50px' alt ='not loaded'/>", self.image.url)
