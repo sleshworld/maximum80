@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,22 +9,23 @@
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/fontello.css">
-  <title>Profile</title>
+  <title>{% block title %}Post adv{% endblock %}</title>
 </head>
 
 <body>
+  {% block content %}
   <ul class="nav nav-pills sticky-top bg-white nav-fill">
     <li class="nav-item">
-      <a class="nav-link" href="index.html">
+      <a class="nav-link" href="{% url 'main-page' %}">
         <span style="font-weight: bold;">Главная</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="top-sellers.html"><span style="font-weight: bold;">Топ продавцов</span>
+      <a class="nav-link" href="{% url 'top-sellers' %}"><span style="font-weight: bold;">Топ продавцов</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="advertisement-post.html">
+      <a class="nav-link active" aria-current="page" href="{% url 'adv-post' %}">
         <span style="font-weight: bold;">Разместить объявление</span>
       </a>
     </li>
@@ -33,26 +35,39 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="login.html">
+      <a class="nav-link" href="{% url 'login' %}">
         <span style="font-weight: bold;">Войти</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="profile.html">
+      <a class="nav-link" href="{% url 'profile' %}">
         <span style="font-weight: bold;">Профиль</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{% url 'logout' %}">
         <span style="font-weight: bold;">Выйти</span>
       </a>
     </li>
   </ul>
-<div class="col" style="margin: 50px;">
-  <div class="display-2">
-    <span class="badge bg-primary">Сейчас вы находитесь на сайте под ником "username".</span>
+  <div class="row">
+    <div class="col" style="margin: 50px;">
+      <div class="display-2">
+        <span class="badge bg-primary">Сообщите миру об этом в этой форме</span>
+      </div>
+    </div>
   </div>
-</div>
-<script src="js/bootstrap.bundle.min.js"></script>
+  <div class="container">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row mb-3">
+        <!-- form.as_p - представляет каждое новое поле формы как тэг p и записывает -->
+        <!-- так же есть form.as_ul и form.as_table и form.as_div -->
+        {{ form.as_p }}
+      </div>
+      <button type="submit" class="btn btn-success">Отправить</button>
+    </form>
+  </div>
+  {% endblock %}
 </body>
 </html>

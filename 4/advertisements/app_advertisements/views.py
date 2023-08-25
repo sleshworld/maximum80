@@ -4,15 +4,18 @@ from .forms import AdvertisementForm
 from django.urls import reverse
 from django.shortcuts import redirect
 # Create your views here.
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
 
 def example(request):
     advertisements = Advertisement.objects.all()
     context = {"advertisements": advertisements}
-    return render(request, "index.html", context)
+    return render(request, "app_advertisements/index.html", context)
 
 def top_sellers(request):
-    return render(request, "top-sellers.html")
+    return render(request, "app_advertisements/top-sellers.html")
 
+@login_required(login_url=reverse_lazy("login"))
 def advertisement_post(request):
     # если пришел запрос на добавление
     if request.method == "POST":
@@ -34,4 +37,4 @@ def advertisement_post(request):
         form = AdvertisementForm()
         # передаем ее через контекст
     context = {'form': form}
-    return render(request, "advertisement-post.html", context)
+    return render(request, "app_advertisements/advertisement-post.html", context)
