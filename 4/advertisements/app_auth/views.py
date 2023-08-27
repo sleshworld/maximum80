@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+from .forms import RegistrationForm
+
 def login_view(request):
     redirect_url = reverse("profile")
     # когда пользователь заходит на страницу логина есть 2 варианта - он уже залогинен или нет 
@@ -33,3 +35,15 @@ def profile_view(request):
 def logout_view(request):
     logout(request)
     return redirect(reverse("login"))
+
+
+def register(request):
+    if request.method == "POST":
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect(reverse("profile"))
+    else:
+        form = RegistrationForm()
+    return render(request, "app_auth/register.html", {'form':form})

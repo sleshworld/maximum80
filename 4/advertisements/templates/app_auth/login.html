@@ -45,11 +45,13 @@
         <span style="font-weight: bold;">Профиль</span>
       </a>
     </li>
+    {% if user.is_authenticated %}
     <li class="nav-item">
       <a class="nav-link" href="{% url 'logout' %}">
         <span style="font-weight: bold;">Выйти</span>
       </a>
     </li>
+    {% endif %}
   </ul>
   <div class="container">
   <div class="row">

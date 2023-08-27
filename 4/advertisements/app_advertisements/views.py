@@ -7,13 +7,32 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
+from django.contrib.auth import get_user_model
+from django.db.models import Count
+
+User = get_user_model()
+
 def example(request):
-    advertisements = Advertisement.objects.all()
-    context = {"advertisements": advertisements}
+    # введем обработку параметров GET запроса
+    # request.GET -> получаем словарь и в этом словаре ищем ключ "query"
+    # по значению ключа производим фильтрацию
+    title = request.GET.get("query")
+    if title:
+        advertisements = Advertisement.objects.filter(title__icontains=title)
+    else:
+        advertisements = Advertisement.objects.all()
+    context = {
+        "advertisements": advertisements,
+        "title": title
+    }
     return render(request, "app_advertisements/index.html", context)
 
 def top_sellers(request):
-    return render(request, "app_advertisements/top-sellers.html")
+    users = User.objects.annotate(adv_count=Count('advertisement')).order_by("-adv_count")
+    context = {
+        'users': users
+    }
+    return render(request, "app_advertisements/top-sellers.html", context)
 
 @login_required(login_url=reverse_lazy("login"))
 def advertisement_post(request):
@@ -38,3 +57,10 @@ def advertisement_post(request):
         # передаем ее через контекст
     context = {'form': form}
     return render(request, "app_advertisements/advertisement-post.html", context)
+
+def advertisement_detail(request, pk):
+    advertisement = Advertisement.objects.get(id=pk)
+    context = {
+        'advertisement': advertisement
+        }
+    return render(request, 'app_advertisements/advertisement.html', context)

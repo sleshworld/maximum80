@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 User = get_user_model() # получили таблицу с пользователеями
 
@@ -52,3 +53,6 @@ class Advertisement(models.Model):
     def img_view(self):
         from django.utils import timezone, html
         return html.format_html("<img src='{}' style='width:50px; height:50px' alt ='not loaded'/>", self.image.url)
+    
+    def get_absolute_url(self):
+        return reverse("adv-detail", kwargs={'pk': self.pk})

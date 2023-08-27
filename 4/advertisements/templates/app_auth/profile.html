@@ -27,16 +27,8 @@
         <span style="font-weight: bold;">Разместить объявление</span>
       </a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="register.html">
-        <span style="font-weight: bold;">Регистрация</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{% url 'login' %}">
-        <span style="font-weight: bold;">Войти</span>
-      </a>
-    </li>
+
+    {% if user.is_authenticated %}
     <li class="nav-item">
       <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">
         <span style="font-weight: bold;">Профиль</span>
@@ -47,6 +39,18 @@
         <span style="font-weight: bold;">Выйти</span>
       </a>
     </li>
+    {% else %}
+    <li class="nav-item">
+      <a class="nav-link" href="register.html">
+        <span style="font-weight: bold;">Регистрация</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'login' %}">
+        <span style="font-weight: bold;">Войти</span>
+      </a>
+    </li>
+    {% endif %}
   </ul>
 <div class="col" style="margin: 50px;">
   <div class="display-2">
